@@ -66,6 +66,8 @@ func (p Process) Spawn(path, URI string) *exec.Cmd {
 		"frag_keyframe+empty_moov",
 	}
 	if p.audio {
+		processCommands = append(processCommands, "-acodec", "copy")
+	} else {
 		processCommands = append(processCommands, "-an")
 	}
 	processCommands = append(processCommands,
