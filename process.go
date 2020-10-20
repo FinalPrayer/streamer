@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	
+	"github.com/sirupsen/logrus"
 )
 
 // IProcess is an interface around the FFMPEG process
@@ -88,5 +90,6 @@ func (p Process) Spawn(path, URI string) *exec.Cmd {
 		fmt.Sprintf("%s/index.m3u8", path),
 	)
 	cmd := exec.Command("ffmpeg", processCommands...)
+	logrus.Infof("%s", processCommands)
 	return cmd
 }
