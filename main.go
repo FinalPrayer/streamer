@@ -85,8 +85,8 @@ func NewStream(
 		StorePath: path,
 		Streak: hotstreak.New(hotstreak.Config{
 			Limit:      10,
-			HotWait:    time.Minute * 2,
-			ActiveWait: time.Minute * 4,
+			HotWait:    time.Second * 10,
+			ActiveWait: time.Second * 20,
 		}).Activate(),
 		OriginalURI: URI,
 		KeepFiles:   keepFiles,
