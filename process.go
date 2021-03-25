@@ -40,14 +40,6 @@ func NewProcess(
 	return &Process{keepFiles, audio}
 }
 
-// getHLSFlags are for getting the flags based on the config context
-func (p Process) getHLSFlags() string {
-	if p.keepFiles {
-		return "append_list"
-	}
-	return "delete_segments+append_list"
-}
-
 // Spawn creates a new FFMPEG cmd
 func (p Process) Spawn(path, URI string) *exec.Cmd {
 	os.MkdirAll(path, os.ModePerm)
@@ -66,17 +58,8 @@ func (p Process) Spawn(path, URI string) *exec.Cmd {
 		"copy",
 		"-c:a",
 		"copy",
-		"-movflags",
-		"frag_keyframe+empty_moov",
-	}
-	if p.audio {
-		processCommands = append(processCommands, "-acodec", "copy")
-	} else {
-		processCommands = append(processCommands, "-an")
-	}
-	processCommands = append(processCommands,
 		"-hls_flags",
-		p.getHLSFlags(),
+		"delete_segments+append_list"
 		"-f",
 		"hls",
 		"-segment_list_flags",
